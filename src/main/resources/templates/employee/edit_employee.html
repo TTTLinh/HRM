@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Employee</title>
+
+    <!-- Custom fonts for this template -->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<!--    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">-->
+    <script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/editform.css}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/employee}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">TL Admin</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/admin/employee}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Nhân Viên</span></a>
+            </li>
+               <!-- Nav Item - Tables -->
+               <li class="nav-item active">
+                <a class="nav-link" th:href="@{/admin/department}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Phòng Ban</span></a>
+            </li>
+
+               <!-- Nav Item - Tables -->
+               <li class="nav-item active">
+                <a class="nav-link" th:href="@{/admin/position}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Chức Vụ</span></a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow d-flex justify-content-center">
+
+                    <ul class="navbar-nav ml-auto">
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a th:href="@{/logout}">logout</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex">
+                            <h6 class="m-0 font-weight-bold text-primary">Dữ liệu nhân viên</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="container">
+                                    <div class="row justify-content-center" >
+                                        <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+
+                                            <div class="row justify-content-center">
+                                                            <h3 th:text="'Nhân viên: '+${employee.userName}"></h3>
+                                            </div>
+                                            <form th:action="@{/admin/employee/updateEmployee}" method="post" th:object="${employee}">
+                                            <div>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Thông tin</th>
+                                                        <th>Dữ liệu</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr style="display: none">
+                                                        <td class="col-md-3">Mã nhân viên</td>
+                                                        <td class="col-md-9">
+                                                            <input th:field="*{id}" class="form-input" id="id" readonly>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Họ và tên </td>
+                                                        <td class="col-md-9">
+                                                            <input th:field="*{userName}" class="form-input" id="userName" >
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Ngày sinh </td>
+                                                        <td class="col-md-9" >
+                                                            <input th:field="*{dateOfBirth}" class="form-input" id="dateOfBirth" type="date">
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Giới tính </td>
+                                                        <td class="col-md-9">
+                                                            <select th:field="*{gender}" class="form-select form-input" id="gender" >
+                                                                <option value="0" th:selected="${employee.gender == false}">Nam</option>
+                                                                <option value="1" th:selected="${employee.gender == true}">Nữ</option>
+                                                                <span  class="errors" style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Số điện thoại </td>
+                                                        <td class="col-md-9"  >
+                                                            <input th:field="*{phone}" class="form-input" id="phone" >
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Địa chỉ </td>
+                                                        <td class="col-md-9" >
+                                                            <input th:field="*{address}" class="form-input" id="address" >
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Email </td>
+                                                        <td class="col-md-9" >
+                                                            <input th:field="*{email}" class="form-input" id="email" >
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Ngày tham gia </td>
+                                                        <td class="col-md-9" >
+                                                            <input th:field="*{joiningDate}" class="form-input" id="joiningDate" readonly>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Phòng Ban </td>
+                                                        <td class="col-md-9">
+                                                            <select th:field="*{departmentId}" class="form-select form-input" id="department" >
+                                                                <option value="">-- Chọn phòng ban --</option>
+                                                                <option th:each="dept : ${departmentEntity}" th:value="${dept.departmentId}" th:text="${dept.departmentName}"></option>
+                                                            </select>
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-md-3">Chức vụ </td>
+                                                        <td class="col-md-9">
+                                                            <select th:field="*{positionsId}" class="form-select form-input" id="manager" required>
+                                                                <option th:each="pst : ${positionEntity}" th:value="${pst.positionsId}" th:text="${pst.positionsName}"></option>
+                                                            </select>
+                                                            <span  class="errors" style="color: red" th:if="${#fields.hasErrors('positionsId')}" th:errors="*{positionsId}"></span>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div style="text-align: center">
+                                                <button  type="submit" class="btn btn-outline-dark btn-sm">Lưu</button>
+                                                <a th:href="@{/admin/employee}" type="button" class="btn btn-outline-dark btn-sm">Quay lại</a>
+                                            </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>@ Test web</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+
+
+
+</body>
+
+</html>
